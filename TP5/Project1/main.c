@@ -3,7 +3,7 @@
 #include "tab.h"
 
 void main() {
-	
+
 	int MyTab1[10];
 	int retour;
 	retour = initTab(MyTab1, 10);
