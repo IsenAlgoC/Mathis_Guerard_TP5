@@ -9,11 +9,15 @@ void main() {
 	int MyTab1[10];
 	int *MyTab2 = NULL;
 	int tabSize = TAB2SIZE;
-	int nbElts = 100;
+	int nbElts = 20;
+
+	//Exercice 1 Question 1
 
 	initTab(MyTab1, 10);
 	afficheTab(MyTab1, 10, 10);
 	printf("\n\n");
+
+	//Exercice 1 Question 2
 
 	MyTab2 = (int*)malloc(TAB2SIZE * sizeof(int));
 	if (MyTab2 != NULL) {
@@ -21,11 +25,14 @@ void main() {
 		for (int i = 0; i < nbElts; i++) {
 			MyTab2[i] = i+1;
 		}
-		MyTab2 = ajoutElementDansTableau(MyTab2, &tabSize, &nbElts, 9000);
 		afficheTab(MyTab2, tabSize, nbElts);
 	}
-	free(MyTab2);
 
+	printf("\n\n");
+	MyTab2 = ajoutElementDansTableau(MyTab2, &tabSize, &nbElts, 9832);
+	afficheTab(MyTab2, tabSize, nbElts);
+
+	free(MyTab2);
 
 
 	printf("\n\n");
