@@ -5,12 +5,6 @@
 #define TAB2SIZE 100
 #define TAILLEINITIALE 100
 
-typedef struct Tableau {
-	int* elt;
-	int size;
-	int eltsCount;
-} TABLEAU;
-
 void main() {
 
 	int MyTab1[10];
@@ -45,9 +39,18 @@ void main() {
 
 	//Exercice 2 Question 1
 	TABLEAU TB = newArray();
-	afficheTab(TB.elt, TB.size, TB.eltsCount);
-
+	displayElements(&TB, 1, TB.size);
 
 	printf("\n\n");
-	system("pause");
+
+	//Exercice 2 Question 3
+	setElement(&TB, 123, 54);
+	displayElements(&TB, 1, TB.size);
+
+	printf("\n\n");
+
+	//Exercice 2 Question 5
+	deleteElements(&TB, 1, 120);
+	displayElements(&TB, 1, TB.size);
+
 }
