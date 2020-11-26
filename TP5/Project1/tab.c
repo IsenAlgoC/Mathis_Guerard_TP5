@@ -4,6 +4,13 @@
 
 #define TABSIZE 10
 #define TAILLEAJOUT 50
+#define TAILLEINITIALE 100
+
+typedef struct Tableau {
+	int* elt;
+	int size;
+	int eltsCount;
+} TABLEAU;
 
 //fonction qui remplit un tableau d'entiers de taille size avec des zéros
 int initTab(int* Tab, int size) {
@@ -37,7 +44,7 @@ int* ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 		return NULL;
 	}
 	else {
-		if (*nbElts >= *size) {
+		if (*nbElts >= *size) { //cas ou il faut ajouter de la mémoire, on créé une copie du tableau pour éviter de perdre des données
 
 			int* tabBis = tab;
 
@@ -54,10 +61,33 @@ int* ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 				return (NULL);
 			}
 		}
-		else {
+		else { //cas ou la mémoire est suffisante
 			tab[*nbElts] = element;
 			*nbElts = *nbElts + 1;
 			return (tab);
 		}
+	}
+}
+
+//créé un nouveau tableau en utilisant la structure TABLEAU, avec une taille initiale pour les données
+TABLEAU newArray() {
+	TABLEAU Tab;
+	Tab->elt = NULL;
+	Tab.size = TAILLEINITIALE;
+	Tab.eltsCount = 0;
+
+	Tab->elt = (int*)malloc(TAILLEINITIALE * sizeof(int));
+	return Tab;
+}
+
+//modifie la taille du tableau en utilisant la structure TABLEAU
+int incrementArraySize(TABLEAU* tab, int incrementValue) {
+	tab->elt = (int*)realloc(tab->elt, (tab->size + incrementValue) * sizeof(int));
+	tab->size = tab->size + incrementValue;
+	if (tab->elt == NULL) {
+		return -1;
+	}
+	else {
+		return tab->size;
 	}
 }

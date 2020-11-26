@@ -3,6 +3,13 @@
 #include "tab.h"
 
 #define TAB2SIZE 100
+#define TAILLEINITIALE 100
+
+typedef struct Tableau {
+	int* elt;
+	int size;
+	int eltsCount;
+} TABLEAU;
 
 void main() {
 
@@ -33,6 +40,12 @@ void main() {
 	afficheTab(MyTab2, tabSize, nbElts);
 
 	free(MyTab2);
+
+	printf("\n\n");
+
+	//Exercice 2 Question 1
+	TABLEAU TB = newArray();
+	afficheTab(TB.elt, TB.size, TB.eltsCount);
 
 
 	printf("\n\n");
