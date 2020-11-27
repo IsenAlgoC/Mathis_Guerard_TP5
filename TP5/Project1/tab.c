@@ -141,49 +141,26 @@ int displayElements(TABLEAU* tab, int startPos, int endPos) {
 
 //supprime des éléments avec compactage du tableau
 int deleteElements(TABLEAU* tab, int startPos, int endPos) {
-	if (tab->elt == NULL || tab->eltsCount > tab->size || startPos < 0 || endPos < 0 || startPos > tab->size || endPos > tab->size) {
+	if (tab == NULL || startPos <= 0 || endPos <= 0 || endPos > tab->size) { //si erreur
 		return -1;
 	}
-	else {
-		if (startPos <= endPos) {
-			for (int i = startPos; i <= tab->size; i++) {
-				int temp = tab->elt[i - 1];
-				tab->elt[i - 1] = tab->elt[i + endPos - startPos];
-				tab->elt[i + endPos - startPos] = temp;
-				//on déplace les élements que l'on veut supprimer vers la fin du tableau
-			}
-			int* tabBis = NULL;
-			tab->eltsCount = tab->eltsCount - (endPos - startPos + 1);
-			tab->size = tab->size - (endPos - startPos + 1);
-			tabBis = (int*)realloc(*tab->elt, (tab->size) * sizeof(int)); //on réalloue la mémoire du tableau avec le nbr d'éléments en tant que nouvelle taille
-			if (tabBis == NULL) {
-				return -1;
-			}
-			else {
-				tab = tabBis;
-				return tab->size;
-			}
+	if (startPos <= endPos) { //premier cas possible
+		for (int i = startPos; i < tab->eltsCount; i++) {
+			tab->elt[i - 1] = tab->elt[endPos - startPos + i]; // on décale chaque élement à supprimer vers la fin du tableau
 		}
-
-
-		else { //si startPos >= endPos
-			for (int i = endPos; i <= tab->size; i++) {
-				int temp2 = tab->elt[i - 1];
-				tab->elt[i - 1] = tab->elt[i + startPos - endPos];
-				tab->elt[i + startPos - endPos] = temp2;
-				//idem qu'avant mais c'est inversé
-			}
-			int* tabBis = NULL;
-			tab->eltsCount = tab->eltsCount - (startPos - endPos + 1);
-			tab->size = tab->size - (startPos - endPos + 1);
-			tabBis = (int*)realloc(*tab->elt, (tab->size) * sizeof(int)); //idem
-			if (tabBis == NULL) {
-				return -1;
-			}
-			else {
-				tab = tabBis;
-				return tab->size;
-			}
-		}
+		tab->eltsCount = tab->eltsCount - (endPos - startPos) - 1;
 	}
+	if (startPos > endPos) { //deuxième cas possible
+		for (int i = endPos; i < startPos; ++i) {
+			tab->elt[i - 1] = tab->elt[startPos + i - endPos]; //idem qu'avant mais startPos et endPos sont inversés
+		}
+		tab->eltsCount = tab->eltsCount - (startPos - endPos) - 1;
+	}
+	tab->size = tab->eltsCount;
+	int* tabBis = NULL;
+	tabBis = (int*)realloc(tab->elt, (tab->size) * sizeof(int)); //on réalloue la mémoire avec une copie du tableau
+	if (tabBis != NULL) {
+		tab->elt = tabBis;
+	}
+	return (tab->size);
 }

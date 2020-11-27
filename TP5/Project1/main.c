@@ -53,4 +53,6 @@ void main() {
 	deleteElements(&TB, 1, 120);
 	displayElements(&TB, 1, TB.size);
 
+	printf("\n\n");
+	system("pause");
 }
